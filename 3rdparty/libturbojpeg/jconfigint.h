@@ -13,6 +13,3 @@
 
 /* Version number of package */
 #define VERSION "1.5.2"
-
-/* The size of `size_t', as computed by sizeof. */
-#define SIZEOF_SIZE_T 8

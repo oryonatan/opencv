@@ -28,6 +28,9 @@ else()
   set(LIB_TURBOJPEG_SOURCES ${LIB_TURBOJPEG_SOURCES} jsimd_none.c)
 endif()
 
+math(EXPR SIZEOF_SIZE_T "${SIZEOF_VOID_P_BITS}/8")
+add_definitions(-DSIZEOF_SIZE_T=${SIZEOF_SIZE_T})
+
 # ----------------------------------------------------------------------------------
 #         Define the library target:
 # ----------------------------------------------------------------------------------
