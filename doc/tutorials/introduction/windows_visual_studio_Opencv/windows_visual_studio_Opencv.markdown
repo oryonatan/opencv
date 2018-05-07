@@ -1,4 +1,4 @@
-How to build applications with OpenCV inside the "Microsoft Visual Studio" {#tutorial_windows_visual_studio_Opencv}
+How to build applications with OpenCV inside the "Microsoft Visual Studio" {#tutorial_windows_visual_studio_opencv}
 ==========================================================================
 
 Everything I describe here will apply to the `C\C++` interface of OpenCV. I start out from the
@@ -145,6 +145,11 @@ opencv_video300d.lib
 opencv_videoio300d.lib
 opencv_videostab300d.lib
 @endcode
+
+Alternatively, your OpenCV download may have been built into one large .lib file. Check by looking in OpenCV\\build\\architecture\\vc14\\lib. In this case all you would add is, for the version 3.3.0:
+@code{.bash}
+opencv_world330.lib
+@endcode
 The letter *d* at the end just indicates that these are the libraries required for the debug. Now
 click ok to save and do the same with a new property inside the Release rule section. Make sure to
 omit the *d* letters from the library names and to save the property sheets with the save icon above
@@ -189,11 +194,11 @@ Test it!
 --------
 
 Now to try this out download our little test [source code
-](https://github.com/opencv/opencv/tree/master/samples/cpp/tutorial_code/introduction/windows_visual_studio_Opencv/introduction_windows_vs.cpp)
+](https://github.com/opencv/opencv/tree/master/samples/cpp/tutorial_code/introduction/windows_visual_studio_opencv/introduction_windows_vs.cpp)
 or get it from the sample code folder of the OpenCV sources. Add this to your project and build it.
 Here's its content:
 
-@include cpp/tutorial_code/introduction/windows_visual_studio_Opencv/introduction_windows_vs.cpp
+@include cpp/tutorial_code/introduction/windows_visual_studio_opencv/introduction_windows_vs.cpp
 
 You can start a Visual Studio build from two places. Either inside from the *IDE* (keyboard
 combination: Control-F5) or by navigating to your build directory and start the application with a
