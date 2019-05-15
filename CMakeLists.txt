@@ -488,6 +488,9 @@ if(ENABLE_IMPL_COLLECTION)
   add_definitions(-DCV_COLLECT_IMPL_DATA)
 endif()
 
+# OpenCV modules to skip
+# ===================================================
+OCV_OPTION(BUILD_opencv_stitching  "Disable stitching module because of compilation errors" OFF)
 
 # ----------------------------------------------------------------------------
 #  Get actual OpenCV version number from sources
