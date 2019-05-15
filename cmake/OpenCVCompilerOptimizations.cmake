@@ -568,7 +568,7 @@ macro(ocv_compiler_optimization_options)
     add_extra_compiler_option("-mcpu=G3 -mtune=G5")
   endif()
   if(ARM)
-    add_extra_compiler_option("-mfp16-format=ieee")
+#    add_extra_compiler_option("-mfp16-format=ieee")
   endif(ARM)
 endmacro()
 
