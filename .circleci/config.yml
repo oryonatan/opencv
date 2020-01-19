@@ -17,7 +17,11 @@ jobs:
           command: |
             mkdir out
             python platforms/ios/build_framework.py --contrib opencv_contrib --iphoneos_archs arm64 --iphonesimulator_archs x86_64 out
-            zip --symlinks -r opencv_ios.zip out/
+            zip --symlinks -r opencv_ios_framework.zip out/opencv2.framework
+            zip --symlinks -r opencv_ios_build_data.zip out/build
       - store_artifacts:
-          path: opencv_ios.zip
-          destination: artifacts
+          path: opencv_ios_framework.zip
+          destination: ios_framework
+      - store_artifacts:
+          path: opencv_ios_build_data.zip
+          destination: build-data
