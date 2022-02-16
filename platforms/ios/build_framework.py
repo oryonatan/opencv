@@ -302,8 +302,8 @@ if __name__ == "__main__":
     parser.add_argument('--dynamic', default=False, action='store_true', help='build dynamic framework (default is "False" - builds static framework)')
     parser.add_argument('--disable-bitcode', default=False, dest='bitcodedisabled', action='store_true', help='disable bitcode (enabled by default)')
     parser.add_argument('--iphoneos_deployment_target', default=os.environ.get('IPHONEOS_DEPLOYMENT_TARGET', IPHONEOS_DEPLOYMENT_TARGET), help='specify IPHONEOS_DEPLOYMENT_TARGET')
-    parser.add_argument('--iphoneos_archs', default='armv7,armv7s,arm64', help='select iPhoneOS target ARCHS')
-    parser.add_argument('--iphonesimulator_archs', default='i386,x86_64', help='select iPhoneSimulator target ARCHS')
+    parser.add_argument('--iphoneos_archs', default=None, help='select iPhoneOS target ARCHS')
+    parser.add_argument('--iphonesimulator_archs', default=None, help='select iPhoneSimulator target ARCHS')
     parser.add_argument('--enable_nonfree', default=False, dest='enablenonfree', action='store_true', help='enable non-free modules (disabled by default)')
     parser.add_argument('--debug', default=False, dest='debug', action='store_true', help='Build "Debug" binaries (disabled by default)')
     parser.add_argument('--debug_info', default=False, dest='debug_info', action='store_true', help='Build with debug information (useful for Release mode: BUILD_WITH_DEBUG_INFO=ON)')
@@ -311,17 +311,17 @@ if __name__ == "__main__":
 
     os.environ['IPHONEOS_DEPLOYMENT_TARGET'] = args.iphoneos_deployment_target
     print('Using IPHONEOS_DEPLOYMENT_TARGET=' + os.environ['IPHONEOS_DEPLOYMENT_TARGET'])
-    iphoneos_archs = args.iphoneos_archs.split(',')
-    print('Using iPhoneOS ARCHS=' + str(iphoneos_archs))
-    iphonesimulator_archs = args.iphonesimulator_archs.split(',')
-    print('Using iPhoneSimulator ARCHS=' + str(iphonesimulator_archs))
 
-    b = iOSBuilder(args.opencv, args.contrib, args.dynamic, args.bitcodedisabled, args.without, args.disable, args.enablenonfree,
-        [
-            (iphoneos_archs, "iPhoneOS"),
-        ] if os.environ.get('BUILD_PRECOMMIT', None) else
-        [
-            (iphoneos_archs, "iPhoneOS"),
-            (iphonesimulator_archs, "iPhoneSimulator"),
-        ], args.debug, args.debug_info)
+    targets = []
+    if args.iphoneos_archs:
+        iphoneos_archs = args.iphoneos_archs.split(',')
+        print('Using iPhoneOS ARCHS=' + str(iphoneos_archs))
+        targets.append((iphoneos_archs, "iPhoneOS"))
+
+    if args.iphonesimulator_archs and not os.environ.get('BUILD_PRECOMMIT', None):
+        iphonesimulator_archs = args.iphonesimulator_archs.split(',')
+        print('Using iPhoneSimulator ARCHS=' + str(iphonesimulator_archs))
+        targets.append((iphonesimulator_archs, "iPhoneSimulator"))
+
+    b = iOSBuilder(args.opencv, args.contrib, args.dynamic, args.bitcodedisabled, args.without, args.disable, args.enablenonfree, targets, args.debug, args.debug_info)
     b.build(args.out)
